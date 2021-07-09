@@ -1,0 +1,24 @@
+  name: DivineCore-AlphaV3
+  main: fun.divinetales.Core.CoreMain
+  version: V3
+  author: Trixy
+  api-version: 1.16
+  softdepend:
+    - PermissionsEx
+  commands:
+    dungeons:
+    dungeonteam:
+    hat:
+    curse:
+    profile:
+      description: For players
+    playerElement:
+      description: Sets a players Element.
+    chatspy:
+      description: Chat Spy Command.
+    ally:
+      description: Ally Command.
+    chat:
+      description: Chat Settings Command.
+    join:
+    mcreload:

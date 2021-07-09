@@ -1,0 +1,116 @@
+###################################################
+#                 Messages File                   #
+###################################################
+
+###################
+# Global Messages #
+# {0} = Command   #
+###################
+
+prefix: "&7[&9&lDT&7]"
+no_permission: "&cYou dont have permission to execute this command!"
+
+####################
+# Command Messages #
+# {0} = Command    #
+####################
+
+command_usage: "&cUse &4{0}"
+
+#########################
+# Help Messages         #
+# {0} = Command         #
+# {1} = Description     #
+#########################
+
+help_format: "&b{0} &a| &7{1}"
+help_message: "&7Help Page"
+staff_msg: "&7[&9&lDivineStaff&7]"
+divine_player: "&7[&9&lDivinePlayer&7]"
+divine_dungeon: "&7[&9&lPlayerDungeon&7]"
+
+################################################################
+# Chat Format                                                  #
+# {0} = Player Name                                            #
+# {1} = Player Display Name                                    #
+# {2} = Pex Prefix (All prefixes if multiprefix; true)         #
+# {3} = Pex Suffix (All suffixes if multisuffix; true)         #
+# {4} = Own Prefix                                             #
+# {5} = Own Suffix                                             #
+# {6} = Message                                                #
+################################################################
+
+multiprefix: false
+multisuffix: false
+
+global_format: "&7[&6G&7]{1}&6: &7{6}"
+roleplay_format: "&7[&6RP&7]{1}&6: &f{6}"
+land_format: "&7[&6KC&7]{1}&6: &7{6}"
+new_format: "&8[New]&7{1}&6: &8{6}"
+spy_format: "&9&lSPY > &7{1}&6: &8{6}"
+
+###################
+# Spy Messages    #
+###################
+
+spy_enabled: "&7Spy mode is now &a&lEnabled"
+spy_disabled: "&7Spy mode is now &c&lDisabled"
+
+#########################
+# Ally Messages         #
+# {0} = Ally            #
+# {1} = toAlly          #
+#########################
+
+ally_not_exist: "{0} does not exist!"
+ally_self: "&e&l{0} &7is already a direct ally of &e&l{1}"
+
+ally_add: "&a&l{0} &7is now ally with &a&l{1}"
+ally_remove: "&c&l{0} &7is no longer ally with &c&l{1}"
+
+##############################
+# Chat inventory Messages    #
+# {0} = Status               #
+##############################
+
+chat_menu_title: "&9Chat Settings"
+
+chat_button_enabled: "&aEnabled"
+chat_button_disabled: "&cDisabled"
+
+land_chat: "Kingdom chat: {0}"
+global_chat: "Global chat: {0}"
+roleplay_chat: "Roleplay chat: {0}"
+
+default_chat: "Default chat: {0}"
+default_chat_set: "Default chat set to: {0}"
+
+land_chat_name: "Kingdom chat"
+global_chat_name: "Global chat"
+roleplay_chat_name: "Roleplay chat"
+
+chat_recieve_land: "You will now recieve Kingdom chat!"
+chat_norecieve_land: "You will no longer recieve Kingdom chat!"
+
+chat_recieve_global: "You will now recieve global chat!"
+chat_norecieve_global: "You will no longer recieve global chat!"
+
+chat_recieve_roleplay: "You will now recieve roleplay chat!"
+chat_norecieve_roleplay: "You will no longer recieve roleplay chat!"
+
+chat_land_disabled: "&cYou have the Kingdom chat disabled! so you wont recieve messages from others"
+chat_global_disabled: "&cYou have the global chat disabled! so you wont recieve messages from others"
+chat_roleplay_disabled: "&cYou have the roleplay chat disabled! so you wont recieve messages from others"
+
+# {0} = New Line
+land_chat_lore: "{0}{0}&7Click here to toggle the Kingdom chat!"
+global_chat_lore: "{0}{0}&7Click here to toggle the global chat!"
+default_chat_lore: "{0}{0}&7Click here to toggle the default chat!"
+roleplay_chat_lore: "{0}{0}&7Click here to toggle the roleplay chat!"
+
+
+
+
+
+
+

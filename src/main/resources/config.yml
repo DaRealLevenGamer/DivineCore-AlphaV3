@@ -1,0 +1,12 @@
+#Sellecting True will allow the use of MYSQL
+use_sql: true
+
+#Turn debug on if SQL is not working
+sql_debug: false
+
+#If MYSQL is set to true, this is where you input the SQL Info
+sql_user: "customer_193539_divinecore"
+sql_pass: "N3A7VGAUaKNVi5VW!cro"
+sql_host: "na03-sql.pebblehost.com"
+sql_port: "3306"
+sql_db: "customer_193539_divinecore"
