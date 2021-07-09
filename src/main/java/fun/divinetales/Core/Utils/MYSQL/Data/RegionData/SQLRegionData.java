@@ -66,4 +66,21 @@ public class SQLRegionData {
         return false;
     }
 
+    public String getAlignment(String region_name) {
+        try {
+            PreparedStatement ps = plugin.getSql().getConnection().prepareStatement("SELECT REGION_ALIGNMENT FROM REGION_DATA WHERE REGION_NAME=?");
+            ps.setString(1 , region_name);
+            ResultSet set = ps.executeQuery();
+            if (set.next()) {
+                return set.getString("REGION_ALIGNMENT");
+            }
+        } catch (SQLException throwables) {
+            if (utils.getBoolean("sql_debug")) {
+                throwables.printStackTrace();
+            }
+            Bukkit.getLogger().log(Level.SEVERE, "SQL has Encountered an error!");
+        }
+        return null;
+    }
+
 }

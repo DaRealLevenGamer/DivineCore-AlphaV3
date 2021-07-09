@@ -3,8 +3,11 @@
   version: V3
   author: Trixy
   api-version: 1.16
-  softdepend:
+  depend:
+    - WorldGaurd
+    - WorldEdit
     - PermissionsEx
+    - SlimeWorldManager
   commands:
     dungeons:
     dungeonteam:

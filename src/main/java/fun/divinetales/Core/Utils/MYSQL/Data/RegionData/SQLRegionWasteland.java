@@ -23,7 +23,7 @@ public class SQLRegionWasteland {
         PreparedStatement preparedStatement;
         try {
             preparedStatement = CoreMain.getInstance().getSql().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS REGION_DATA_WASTELAND " +
-                    "(WASTELAND_NAME VARCHAR(100),WASTELAND_ID INT NOT NULL AUTO_INCREMENT,WASTELAND_WORLD VARCHAR(100),WASTELAND_ALIGNMENT VARCHAR(100), PRIMARY KEY (ID))");
+                    "(WASTELAND_NAME VARCHAR(100),WASTELAND_ID INT NOT NULL AUTO_INCREMENT,WASTELAND_WORLD VARCHAR(100), PRIMARY KEY (ID))");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             if (utils.getBoolean("sql_debug")) {
@@ -37,7 +37,7 @@ public class SQLRegionWasteland {
         try {
             if (!exists(name)) {
                 PreparedStatement preparedStatement = plugin.getSql().getConnection().prepareStatement("INSERT IGNORE INTO REGION_DATA" +
-                        " (WASTELAND_NAME,WASTELAND_WORLD,WASTELAND_ALIGNMENT) VALUES (?,?,?)");
+                        " (WASTELAND_NAME,WASTELAND_WORLD) VALUES (?,?)");
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, world_Name);
                 preparedStatement.setString(3, alignment);

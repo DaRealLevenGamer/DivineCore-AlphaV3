@@ -1,6 +1,9 @@
 package fun.divinetales.Core;
 
 import com.grinderwolf.swm.api.SlimePlugin;
+import fun.divinetales.Core.Alignments.AlignmentManager;
+import fun.divinetales.Core.Alignments.Listeners.NeutralListener;
+import fun.divinetales.Core.Alignments.Utils.WastelandRunnable;
 import fun.divinetales.Core.Coammnds.*;
 import fun.divinetales.Core.Dungeons.Commands.Dungeons;
 import fun.divinetales.Core.Dungeons.Commands.DungeonTeamCreate;
@@ -60,6 +63,13 @@ public class CoreMain extends JavaPlugin {
 
     //Imports for playerData
     private PlayerProfileManager playerProfileManager;
+
+    //For alignments
+    private final AlignmentManager alignmentManager = new AlignmentManager(this);
+
+
+    //RUNNABLE FOR WasteLands
+    WastelandRunnable runnable = new WastelandRunnable();
 
     //Setters for the chat
     private final HashMap<String, String> pexGroups = new HashMap<>();
@@ -159,6 +169,7 @@ public class CoreMain extends JavaPlugin {
                 }
             }
         }, 0L, 1200L);
+        runnable.run();
         log("DivineCore-AlphaV3 has loaded successfully!");
     }
 
@@ -180,6 +191,9 @@ public class CoreMain extends JavaPlugin {
             getInstance().getPlayerProfileManager().unregisterPlayer(p.getUniqueId());
         }
         this.aManager.save();
+        NeutralListener.inv.clear();
+        alignmentManager.cleanState();
+        runnable.cancel();
         log("DivineCore-AlphaV3 has been disabled!");
     }
 
