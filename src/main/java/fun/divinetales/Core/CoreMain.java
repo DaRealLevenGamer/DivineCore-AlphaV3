@@ -5,6 +5,10 @@ import fun.divinetales.Core.Alignments.AlignmentManager;
 import fun.divinetales.Core.Alignments.Listeners.NeutralListener;
 import fun.divinetales.Core.Alignments.Utils.WastelandRunnable;
 import fun.divinetales.Core.Coammnds.*;
+import fun.divinetales.Core.Coammnds.Chat.*;
+import fun.divinetales.Core.Coammnds.Integrated.BMFCommand;
+import fun.divinetales.Core.Coammnds.Integrated.CosmicCommand;
+import fun.divinetales.Core.Coammnds.Integrated.ElementCommand;
 import fun.divinetales.Core.Dungeons.Commands.Dungeons;
 import fun.divinetales.Core.Dungeons.Commands.DungeonTeamCreate;
 import fun.divinetales.Core.Events.ChatEvents.*;
@@ -145,6 +149,7 @@ public class CoreMain extends JavaPlugin {
         Objects.requireNonNull(getCommand("curse")).setExecutor(new CosmicCommand());
         Objects.requireNonNull(getCommand("dungeonteam")).setExecutor(new DungeonTeamCreate());
         Objects.requireNonNull(getCommand("dungeons")).setExecutor(new Dungeons());
+        Objects.requireNonNull(getCommand("alignment")).setExecutor(new AlignmentCommand());
 
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             if (CurseDefine.on) {

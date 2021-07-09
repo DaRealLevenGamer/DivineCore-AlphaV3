@@ -1,4 +1,4 @@
-package fun.divinetales.Core.Coammnds;
+package fun.divinetales.Core.Coammnds.Chat;
 
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Utils.Data.ChatPlayerData;

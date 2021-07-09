@@ -4,7 +4,9 @@ import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Utils.ChatUtils.MessageUtils;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import static fun.divinetales.Core.Utils.ColorUtil.*;

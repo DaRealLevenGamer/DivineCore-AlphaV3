@@ -15,7 +15,8 @@ public class ConfigUtils {
         MYSQLPass("sql_pass"),
         MYSQLHost("sql_host"),
         MYSQLPort("sql_port"),
-        MYSQLDataBase("sql_db");
+        MYSQLDataBase("sql_db"),
+        WORLD("main_world");
         private final String path;
 
         getConfig(String path) {

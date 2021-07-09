@@ -1,14 +1,21 @@
 package fun.divinetales.Core.Coammnds;
 
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import fun.divinetales.Core.Coammnds.SubCommands.ASubcommands.SetRegionA;
 import fun.divinetales.Core.Coammnds.SubCommands.CosmicSubCommands.*;
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Utils.ChatUtils.MessageUtils;
 import fun.divinetales.Core.Utils.CommandUtils.SubCommand;
+import fun.divinetales.Core.Utils.MYSQL.ConfigUtils;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -18,18 +25,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fun.divinetales.Core.Utils.ColorUtil.color;
-import static fun.divinetales.Core.Utils.ColorUtil.msgPlayer;
+import static fun.divinetales.Core.Utils.ColorUtil.*;
 
-public class CosmicCommand implements TabExecutor {
+public class AlignmentCommand implements TabExecutor {
 
-    public CosmicCommand() {
-        subCommands.add(new CurseAdd());
-        subCommands.add(new CurseRemove());
-        subCommands.add(new CurseReset());
-        subCommands.add(new CurseShow());
-        subCommands.add(new CurseSet());
-        subCommands.add(new CurseKills());
+    public AlignmentCommand() {
+        new SetRegionA();
     }
 
     private ArrayList<SubCommand> subCommands = new ArrayList<>();
@@ -39,11 +40,6 @@ public class CosmicCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-
-            if (!sender.hasPermission("staff.curse")) {
-                msgPlayer(player, this.msgUtil.getCReplaceMessage(MessageUtils.Message.NO_PERMISSION));
-                return true;
-            }
 
             if (args.length > 0) {
 
@@ -89,6 +85,7 @@ public class CosmicCommand implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+
         if (args.length == 1) {
             ArrayList<String> subCommandArgs = new ArrayList<>();
 
@@ -103,12 +100,10 @@ public class CosmicCommand implements TabExecutor {
         if (args.length == 2) {
             ArrayList<String> names = new ArrayList<>();
 
-            Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
-            Bukkit.getServer().getOnlinePlayers().toArray(players);
-
-            for (int i = 0; i < players.length; i++) {
-                names.add(players[i].getName());
+            for (World worldName : Bukkit.getWorlds()) {
+                names.add(worldName.getName());
             }
+
 
             return names;
         }

@@ -1,4 +1,4 @@
-package fun.divinetales.Core.Coammnds;
+package fun.divinetales.Core.Coammnds.Integrated;
 
 import fun.divinetales.Core.Coammnds.SubCommands.Elements.*;
 import fun.divinetales.Core.CoreMain;

@@ -1,4 +1,4 @@
-package fun.divinetales.Core.Coammnds;
+package fun.divinetales.Core.Coammnds.Chat;
 
 import java.util.HashMap;
 import java.util.Map;
