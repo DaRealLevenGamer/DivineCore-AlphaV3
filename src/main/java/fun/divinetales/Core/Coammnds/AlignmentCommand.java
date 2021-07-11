@@ -30,7 +30,7 @@ import static fun.divinetales.Core.Utils.ColorUtil.*;
 public class AlignmentCommand implements TabExecutor {
 
     public AlignmentCommand() {
-        new SetRegionA();
+       subCommands.add(new SetRegionA());
     }
 
     private ArrayList<SubCommand> subCommands = new ArrayList<>();

@@ -33,7 +33,7 @@ public class NeutralListener implements Listener {
         Player player = e.getPlayer();
 
         if (data.exists(e.getRegion().getId())) {
-            if (data.getAlignment(e.getRegion().getId()).equals("Neutral")) {
+            if (data.getAlignment(e.getRegion().getId()).equals("TYPE_NEUTRAL")) {
                 manager.setAlignmentType(player, AlignmentType.Neutral);
             }
         }
@@ -62,7 +62,7 @@ public class NeutralListener implements Listener {
             inv.put(player.getUniqueId(), newStack);
             e.getDrops().removeAll(newInv);
 
-            msgPlayer(player, msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINEPLAYER) + color(" &6&lYou died in a NeutralState, bye bye to your items!"));
+            msgPlayer(player, msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINEPLAYER) + color(" &6&lYou died in a NeutralState,say bye bye to your items!"));
 
         }
 
@@ -76,7 +76,6 @@ public class NeutralListener implements Listener {
         if (inv.containsKey(player.getUniqueId())) {
             player.getInventory().setArmorContents(newInv);
             inv.remove(player.getUniqueId());
-            player.sendMessage(color("&c&lYou died in a neutral state!"));
         }
     }
 

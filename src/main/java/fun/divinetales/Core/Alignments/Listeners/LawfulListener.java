@@ -1,6 +1,7 @@
 package fun.divinetales.Core.Alignments.Listeners;
 
 import de.netzkronehd.WGRegionEvents.events.RegionEnterEvent;
+import de.netzkronehd.WGRegionEvents.events.RegionLeaveEvent;
 import fun.divinetales.Core.Alignments.AlignmentManager;
 import fun.divinetales.Core.Alignments.AlignmentType;
 import fun.divinetales.Core.CoreMain;
@@ -11,9 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import static fun.divinetales.Core.Utils.ColorUtil.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class LawfulListener implements Listener {
 
@@ -26,10 +24,18 @@ public class LawfulListener implements Listener {
         Player player = e.getPlayer();
 
         if (data.exists(e.getRegion().getId())) {
-            if (data.getAlignment(e.getRegion().getId()).equals("Lawful")) {
+            if (data.getAlignment(e.getRegion().getId()).equals("TYPE_LAWFUL")) {
                 manager.setAlignmentType(player, AlignmentType.Lawful);
             }
         }
+
+    }
+
+    @EventHandler
+    public void LawfulStateLeave(RegionLeaveEvent e) {
+
+        Player player = e.getPlayer();
+        manager.setAlignmentType(player, AlignmentType.Neutral);
 
     }
 

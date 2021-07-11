@@ -1,6 +1,8 @@
 package fun.divinetales.Core.Alignments.Listeners;
 
+import de.netzkronehd.WGRegionEvents.WGRegionEventsListener;
 import de.netzkronehd.WGRegionEvents.events.RegionEnterEvent;
+import de.netzkronehd.WGRegionEvents.events.RegionLeaveEvent;
 import fun.divinetales.Core.Alignments.AlignmentManager;
 import fun.divinetales.Core.Alignments.AlignmentType;
 import fun.divinetales.Core.CoreMain;
@@ -13,7 +15,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import static fun.divinetales.Core.Utils.ColorUtil.color;
 import static fun.divinetales.Core.Utils.ColorUtil.msgPlayer;
 
-public class ChaoticListener implements Listener {
+public class ChaoticListener implements Listener{
 
     private final SQLRegionData data = new SQLRegionData(CoreMain.getInstance());
     private final AlignmentManager manager = new AlignmentManager(CoreMain.getInstance());
@@ -24,7 +26,7 @@ public class ChaoticListener implements Listener {
         Player player = e.getPlayer();
 
         if (data.exists(e.getRegion().getId())) {
-            if (data.getAlignment(e.getRegion().getId()).equals("Chaotic")) {
+            if (data.getAlignment(e.getRegion().getId()).equals("TYPE_CHAOTIC")) {
                 manager.setAlignmentType(player, AlignmentType.Chaotic);
             }
         }

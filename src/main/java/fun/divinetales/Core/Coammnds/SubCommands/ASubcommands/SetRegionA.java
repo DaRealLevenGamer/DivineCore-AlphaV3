@@ -1,5 +1,7 @@
 package fun.divinetales.Core.Coammnds.SubCommands.ASubcommands;
 
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.extension.platform.Actor;
 import com.sk89q.worldedit.world.World;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -11,6 +13,7 @@ import fun.divinetales.Core.Utils.CommandUtils.SubCommand;
 import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionData;
 import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionWasteland;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import static fun.divinetales.Core.Utils.ColorUtil.*;
 import java.io.IOException;
@@ -46,7 +49,7 @@ public class SetRegionA extends SubCommand {
         String region_name = args[1];
         String alignment_type = args[2];
 
-        World world = (World) Bukkit.getWorld(player.getUniqueId());
+        World world = WorldGuard.getInstance().getPlatform().getMatcher().getWorldByName(player.getWorld().getName());
 
         RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         RegionManager regions = container.get(world);

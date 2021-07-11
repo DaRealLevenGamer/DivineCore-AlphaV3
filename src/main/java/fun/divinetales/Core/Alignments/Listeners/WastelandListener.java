@@ -1,16 +1,21 @@
 package fun.divinetales.Core.Alignments.Listeners;
 
 import de.netzkronehd.WGRegionEvents.events.RegionEnterEvent;
+import de.netzkronehd.WGRegionEvents.events.RegionLeaveEvent;
 import fun.divinetales.Core.Alignments.AlignmentManager;
 import fun.divinetales.Core.Alignments.AlignmentType;
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Utils.ChatUtils.MessageUtils;
 import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionData;
 import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionWasteland;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import static fun.divinetales.Core.Utils.ColorUtil.color;
 import static fun.divinetales.Core.Utils.ColorUtil.msgPlayer;
@@ -27,12 +32,40 @@ public class WastelandListener implements Listener {
         Player player = e.getPlayer();
 
         if (data.exists(e.getRegion().getId())) {
-            if (data.getAlignment(e.getRegion().getId()).equals("Wasteland") || wasteland.exists(e.getRegion().getId())) {
+            if (data.getAlignment(e.getRegion().getId()).equals("TYPE_WASTELAND") || wasteland.exists(e.getRegion().getId())) {
                 manager.setAlignmentType(player, AlignmentType.WasteLand);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, Integer.MAX_VALUE, 1, true, true, false));
             }
         }
 
     }
+
+    @EventHandler
+    public void onHeal(PlayerItemConsumeEvent e) {
+        Player player = e.getPlayer();
+
+        if (AlignmentManager.getPlayerState().get(player.getUniqueId()) == AlignmentType.WasteLand) {
+            if (e.getItem().getType() == Material.GOLDEN_APPLE || e.getItem().getType() == Material.POTION) {
+                e.setCancelled(true);
+            }
+        }
+
+    }
+
+    @EventHandler
+    public void WastelandStateLeave(RegionLeaveEvent e) {
+
+        Player player = e.getPlayer();
+
+        if (data.exists(e.getRegion().getId())) {
+            if (data.getAlignment(e.getRegion().getId()).equals("TYPE_WASTELAND") || wasteland.exists(e.getRegion().getId())) {
+                if (player.hasPotionEffect(PotionEffectType.POISON))
+                    player.removePotionEffect(PotionEffectType.POISON);
+            }
+        }
+
+    }
+
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {

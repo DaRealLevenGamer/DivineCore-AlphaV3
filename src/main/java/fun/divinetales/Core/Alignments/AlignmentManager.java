@@ -30,6 +30,7 @@ public class AlignmentManager {
 
                 player.sendTitle("", color("&6&lYou have entered a Neutral state!"), 20, 60, 20);
                 msgPlayer(player, msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINEPLAYER) + color(" &6&lYou will only loose items on death, but keep armor and exp!"));
+                playerState.remove(player.getUniqueId());
                 playerState.put(player.getUniqueId(), AlignmentType.Neutral);
                 break;
 
@@ -37,6 +38,7 @@ public class AlignmentManager {
 
                 player.sendTitle("", color("&f&lYou have entered a Lawful state!"), 20, 60, 20);
                 msgPlayer(player, msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINEPLAYER) + color(" &f&lYou will not loose anything upon death!"));
+                playerState.remove(player.getUniqueId());
                 playerState.put(player.getUniqueId(), AlignmentType.Lawful);
                 break;
 
@@ -44,6 +46,7 @@ public class AlignmentManager {
 
                 player.sendTitle("", color("&4&lYou have entered a Chaotic state!"), 20, 60, 20);
                 msgPlayer(player, msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINEPLAYER) + color(" &4&lYou will loose everything upon death, find a safe place immediately!"));
+                playerState.remove(player.getUniqueId());
                 playerState.put(player.getUniqueId(), AlignmentType.Chaotic);
                 break;
 
@@ -51,6 +54,7 @@ public class AlignmentManager {
 
                 player.sendTitle("", color("&c&lYou have entered a Wasteland!"), 20, 60, 20);
                 msgPlayer(player, msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINEPLAYER) + color(" &c&lWatch out the air is known to be TOXIC!"));
+                playerState.remove(player.getUniqueId());
                 playerState.put(player.getUniqueId(), AlignmentType.WasteLand);
                 break;
         }

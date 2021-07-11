@@ -2,7 +2,6 @@ package fun.divinetales.Core.Alignments.Utils;
 
 import fun.divinetales.Core.Alignments.AlignmentManager;
 import fun.divinetales.Core.Alignments.AlignmentType;
-import fun.divinetales.Core.CoreMain;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -13,9 +12,6 @@ import java.util.Objects;
 
 public class WastelandRunnable extends BukkitRunnable {
 
-    private final AlignmentManager manager = new AlignmentManager(CoreMain.getInstance());
-
-
     @Override
     public void run() {
 
@@ -23,12 +19,16 @@ public class WastelandRunnable extends BukkitRunnable {
 
             if (AlignmentManager.getPlayerState().get(isWasteland.getUniqueId()) == AlignmentType.WasteLand) {
 
-                isWasteland.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 6000, Objects.requireNonNull(isWasteland.getPotionEffect(PotionEffectType.POISON)).getAmplifier() + 1, true, true, false));
+                if (isWasteland.hasPotionEffect(PotionEffectType.POISON)) {
+                    isWasteland.addPotionEffect(new PotionEffect(PotionEffectType.POISON, Integer.MAX_VALUE, Objects.requireNonNull(isWasteland.getPotionEffect(PotionEffectType.POISON)).getAmplifier() + 1, true, true, false));
+                } else {
+                    isWasteland.addPotionEffect(new PotionEffect(PotionEffectType.POISON, Integer.MAX_VALUE, 1, true, true, false));
+                }
+
             }
 
         }
 
     }
-
 
 }

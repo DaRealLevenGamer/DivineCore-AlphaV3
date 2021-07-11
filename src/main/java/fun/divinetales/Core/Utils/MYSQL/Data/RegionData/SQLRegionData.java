@@ -19,11 +19,10 @@ public class SQLRegionData {
     }
 
     public void createRegionTable() {
-
         PreparedStatement preparedStatement;
         try {
             preparedStatement = CoreMain.getInstance().getSql().getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS REGION_DATA " +
-                    "(REGION_NAME VARCHAR(100),REGION_ID INT NOT NULL AUTO_INCREMENT,REGION_WORLD VARCHAR(100),REGION_ALIGNMENT VARCHAR(100), PRIMARY KEY (ID))");
+                    "(REGION_NAME VARCHAR(100),REGION_ID INT NOT NULL AUTO_INCREMENT,REGION_WORLD VARCHAR(100),REGION_ALIGNMENT VARCHAR(100), PRIMARY KEY (REGION_ID ))");
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             if (utils.getBoolean("sql_debug")) {

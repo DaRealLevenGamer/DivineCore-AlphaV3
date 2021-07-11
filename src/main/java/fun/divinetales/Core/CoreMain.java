@@ -2,7 +2,10 @@ package fun.divinetales.Core;
 
 import com.grinderwolf.swm.api.SlimePlugin;
 import fun.divinetales.Core.Alignments.AlignmentManager;
+import fun.divinetales.Core.Alignments.Listeners.ChaoticListener;
+import fun.divinetales.Core.Alignments.Listeners.LawfulListener;
 import fun.divinetales.Core.Alignments.Listeners.NeutralListener;
+import fun.divinetales.Core.Alignments.Listeners.WastelandListener;
 import fun.divinetales.Core.Alignments.Utils.WastelandRunnable;
 import fun.divinetales.Core.Coammnds.*;
 import fun.divinetales.Core.Coammnds.Chat.*;
@@ -23,6 +26,8 @@ import fun.divinetales.Core.Utils.Data.Config;
 import fun.divinetales.Core.Utils.Data.PlayerData.PlayerProfileManager;
 import fun.divinetales.Core.Utils.InventoryUtils.GUIManager;
 import fun.divinetales.Core.Utils.MYSQL.ConfigUtils;
+import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionData;
+import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionWasteland;
 import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerData;
 import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerProfile;
 import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerSkins;
@@ -61,6 +66,8 @@ public class CoreMain extends JavaPlugin {
     private SQLPlayerData sqlPlayerData;
     private SQLPlayerProfile sqlPlayerProfile;
     private SQLPlayerSkins sqlPlayerSkins;
+    private SQLRegionData regionData;
+    private SQLRegionWasteland wasteland;
 
     //FOR GUI STUFF
     private GUIManager manager;
@@ -101,6 +108,8 @@ public class CoreMain extends JavaPlugin {
         this.sqlPlayerProfile = new SQLPlayerProfile(this);
         this.sqlPlayerSkins = new SQLPlayerSkins(this);
         this.sqlPlayerData = new SQLPlayerData(this);
+        this.regionData = new SQLRegionData(this);
+        this.wasteland = new SQLRegionWasteland(this);
         if (configUtils.getBoolean("use_sql")) {
             try {
                 sql.Connect();
@@ -116,6 +125,9 @@ public class CoreMain extends JavaPlugin {
                 sqlPlayerData.createPlayerTable();
                 sqlPlayerProfile.createProfileTable();
                 sqlPlayerSkins.createSkinTable();
+                regionData.createRegionTable();
+                wasteland.createWastelandTable();
+
             }
 
         }
@@ -126,7 +138,8 @@ public class CoreMain extends JavaPlugin {
         this.iutil = new ChatInvUtils(plugin);
         //Registers events
         registerEvent(new ChatEvent(), new JoinEvent(), new QuitEvent(), new PvpEvents(),
-                new InventoryEvent(), new JoinCommand(), new CurseListeners(new Config("Curse_Files", "PlayerRep", false)));
+                new InventoryEvent(), new JoinCommand(), new CurseListeners(new Config("Curse_Files", "PlayerRep", false)), new ChaoticListener(),
+        new LawfulListener(), new NeutralListener(), new WastelandListener());
         //registers online players
         for (Player p : Bukkit.getOnlinePlayers()) {
             getInstance().getPlayerManager().registerPlayer(p.getUniqueId());
