@@ -14,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import static fun.divinetales.Core.Utils.ColorUtil.color;
@@ -34,7 +33,6 @@ public class WastelandListener implements Listener {
         if (data.exists(e.getRegion().getId())) {
             if (data.getAlignment(e.getRegion().getId()).equals("TYPE_WASTELAND") || wasteland.exists(e.getRegion().getId())) {
                 manager.setAlignmentType(player, AlignmentType.WasteLand);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, Integer.MAX_VALUE, 1, true, true, false));
             }
         }
 
@@ -45,7 +43,7 @@ public class WastelandListener implements Listener {
         Player player = e.getPlayer();
 
         if (AlignmentManager.getPlayerState().get(player.getUniqueId()) == AlignmentType.WasteLand) {
-            if (e.getItem().getType() == Material.GOLDEN_APPLE || e.getItem().getType() == Material.POTION) {
+            if (e.getItem().getType() == Material.GOLDEN_APPLE && !player.isOp() || e.getItem().getType() == Material.POTION && !player.isOp()) {
                 e.setCancelled(true);
             }
         }

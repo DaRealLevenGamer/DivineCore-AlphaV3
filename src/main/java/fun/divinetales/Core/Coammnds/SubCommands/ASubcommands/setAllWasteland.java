@@ -12,6 +12,8 @@ import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionWasteland;
 import org.bukkit.entity.Player;
 import static fun.divinetales.Core.Utils.ColorUtil.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class setAllWasteland extends SubCommand {
 
@@ -33,6 +35,8 @@ public class setAllWasteland extends SubCommand {
     @Override
     public void perform(Player player, String[] args) throws IOException {
 
+        List<String> added_wasteland_regions = new ArrayList<>();
+
         MessageUtils msgUtil = CoreMain.getInstance().getMsgUtil();
         SQLRegionWasteland wasteland = new SQLRegionWasteland(CoreMain.getInstance());
 
@@ -45,11 +49,22 @@ public class setAllWasteland extends SubCommand {
 
             assert regions != null;
             for (ProtectedRegion region : regions.getRegions().values()) {
-                if (region.getId().startsWith("WastelandRegion")) {
+                if (region.getId().contains("Wasteland".toLowerCase())) {
                     assert world != null;
-                    wasteland.createWastelandPlacement(region.getId(), world.getName(), "TYPE_WASTELAND");
-                    msgPlayer(player, color(msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINESTAFF) + " &a&lWasteland regions have been set!"));
+                    if (!wasteland.exists(region.getId())) {
+
+                        wasteland.createWastelandPlacement(region.getId(), world.getName());
+                        added_wasteland_regions.add(region.getId());
+
+                    }
                 }
+            }
+
+            if (added_wasteland_regions.size() == 0) {
+                msgPlayer(player, msgUtil.getMessage(MessageUtils.Message.DIVINESTAFF) + color(" &c&lNo wasteland regions have been added!"));
+            } else {
+                msgPlayer(player, msgUtil.getMessage(MessageUtils.Message.DIVINESTAFF) + color(" &a&l" + added_wasteland_regions.size()
+                + " &a&lWasteland Regions have been added!"));
             }
 
         }

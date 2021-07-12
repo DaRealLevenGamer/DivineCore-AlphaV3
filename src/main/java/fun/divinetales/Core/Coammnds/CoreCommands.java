@@ -1,6 +1,7 @@
 package fun.divinetales.Core.Coammnds;
 
 import fun.divinetales.Core.Coammnds.Core.FreezeCommand;
+import fun.divinetales.Core.Coammnds.Core.UnFreezeCommand;
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Utils.ChatUtils.MessageUtils;
 import fun.divinetales.Core.Utils.CommandUtils.SubCommand;
@@ -26,6 +27,7 @@ public class CoreCommands implements TabExecutor {
 
     public CoreCommands() {
         subCommands.add(new FreezeCommand());
+        subCommands.add(new UnFreezeCommand());
     }
 
     @Override

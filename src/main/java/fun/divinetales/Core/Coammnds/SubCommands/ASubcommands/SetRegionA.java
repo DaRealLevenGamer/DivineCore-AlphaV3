@@ -73,7 +73,7 @@ public class SetRegionA extends SubCommand {
                        break;
 
                    case wasteland:
-                       wasteland.createWastelandPlacement(region_name, player.getWorld().getName(), "TYPE_WASTELAND");
+                       wasteland.createWastelandPlacement(region_name, player.getWorld().getName());
                        msgPlayer(player, msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINESTAFF) + color(" &9&lRegion " + region_name + " &9&lhas been set to &c&lWasteland"));
                        break;
                }

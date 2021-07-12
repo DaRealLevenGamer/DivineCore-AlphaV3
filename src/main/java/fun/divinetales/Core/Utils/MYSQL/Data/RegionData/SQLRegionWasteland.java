@@ -33,14 +33,14 @@ public class SQLRegionWasteland {
         }
     }
 
-    public void createWastelandPlacement(String name, String world_Name, String alignment) {
+    public void createWastelandPlacement(String name, String world_Name) {
+        PreparedStatement preparedStatement;
         try {
             if (!exists(name)) {
-                PreparedStatement preparedStatement = plugin.getSql().getConnection().prepareStatement("INSERT IGNORE INTO REGION_DATA" +
+                preparedStatement = CoreMain.getInstance().getSql().getConnection().prepareStatement("INSERT IGNORE INTO REGION_DATA_WASTELAND" +
                         " (WASTELAND_NAME,WASTELAND_WORLD) VALUES (?,?)");
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, world_Name);
-                preparedStatement.setString(3, alignment);
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException throwables) {

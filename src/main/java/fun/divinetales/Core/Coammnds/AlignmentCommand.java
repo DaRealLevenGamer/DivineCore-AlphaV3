@@ -1,6 +1,7 @@
 package fun.divinetales.Core.Coammnds;
 
 import fun.divinetales.Core.Coammnds.SubCommands.ASubcommands.SetRegionA;
+import fun.divinetales.Core.Coammnds.SubCommands.ASubcommands.setAllWasteland;
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Utils.ChatUtils.MessageUtils;
 import fun.divinetales.Core.Utils.CommandUtils.SubCommand;
@@ -25,6 +26,7 @@ public class AlignmentCommand implements TabExecutor {
 
     public AlignmentCommand() {
        subCommands.add(new SetRegionA());
+       subCommands.add(new setAllWasteland());
     }
 
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
