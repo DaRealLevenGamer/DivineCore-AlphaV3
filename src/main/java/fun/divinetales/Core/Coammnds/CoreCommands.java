@@ -1,6 +1,6 @@
 package fun.divinetales.Core.Coammnds;
 
-import fun.divinetales.Core.Coammnds.SubCommands.ASubcommands.SetRegionA;
+import fun.divinetales.Core.Coammnds.Core.FreezeCommand;
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Utils.ChatUtils.MessageUtils;
 import fun.divinetales.Core.Utils.CommandUtils.SubCommand;
@@ -8,8 +8,6 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -21,22 +19,22 @@ import java.util.List;
 
 import static fun.divinetales.Core.Utils.ColorUtil.*;
 
-public class AlignmentCommand implements TabExecutor {
-
-    public AlignmentCommand() {
-       subCommands.add(new SetRegionA());
-    }
+public class CoreCommands implements TabExecutor {
+    MessageUtils msg = CoreMain.getInstance().getMsgUtil();
 
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
-    MessageUtils msgUtil = CoreMain.getInstance().getMsgUtil();
+
+    public CoreCommands() {
+        subCommands.add(new FreezeCommand());
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
             if (args.length > 0) {
-
                 for (int i = 0; i < getSubCommands().size(); i++) {
                     if (args[0].equalsIgnoreCase(getSubCommands().get(i).getName())) {
                         try {
@@ -47,11 +45,10 @@ public class AlignmentCommand implements TabExecutor {
                         return true;
                     }
                 }
-
             }
 
             if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
-                player.sendMessage(color("&7&l---------------&8&l>>") + this.msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINESTAFF) + color("&8&l<<&7&l---------------"));
+                player.sendMessage(color("&7&l---------------&8&l>>") + this.msg.getCReplaceMessage(MessageUtils.Message.DIVINESTAFF) + color("&8&l<<&7&l---------------"));
                 for (int i = 0; i < getSubCommands().size(); i++) {
 
                     SubCommand suncommand = getSubCommands().get(i);
@@ -68,8 +65,9 @@ public class AlignmentCommand implements TabExecutor {
                 player.sendMessage(color("&7&l--------------------------------------------"));
                 return true;
             }
-        }
 
+
+        }
         return false;
     }
 
@@ -89,17 +87,6 @@ public class AlignmentCommand implements TabExecutor {
 
             }
             return subCommandArgs;
-        }
-
-        if (args.length == 2) {
-            ArrayList<String> names = new ArrayList<>();
-
-            for (World worldName : Bukkit.getWorlds()) {
-                names.add(worldName.getName());
-            }
-
-
-            return names;
         }
 
         return null;

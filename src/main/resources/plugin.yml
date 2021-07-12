@@ -8,6 +8,7 @@
     - WorldEdit
     - PermissionsEx
   commands:
+    core:
     alignment:
     dungeons:
     dungeonteam:

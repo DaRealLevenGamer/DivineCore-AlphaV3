@@ -26,6 +26,11 @@ public class NeutralListener implements Listener {
     private final SQLRegionData data = new SQLRegionData(CoreMain.getInstance());
     private final AlignmentManager manager = new AlignmentManager(CoreMain.getInstance());
     public static final HashMap<UUID, ItemStack[]> inv = new HashMap<>();
+    private static final HashMap<UUID, ItemStack> helmet = new HashMap<>();
+    private static final HashMap<UUID, ItemStack> chest = new HashMap<>();
+    private static final HashMap<UUID, ItemStack> leg = new HashMap<>();
+    private static final HashMap<UUID, ItemStack> boot = new HashMap<>();
+
 
     @EventHandler
     public void NeutralStateEnter(RegionEnterEvent e) {
@@ -58,6 +63,11 @@ public class NeutralListener implements Listener {
             newInv.add(player.getInventory().getLeggings());
             newInv.add(player.getInventory().getBoots());
 
+            helmet.put(player.getUniqueId(), player.getInventory().getHelmet());
+            chest.put(player.getUniqueId(), player.getInventory().getChestplate());
+            leg.put(player.getUniqueId(), player.getInventory().getLeggings());
+            boot.put(player.getUniqueId(), player.getInventory().getBoots());
+
             ItemStack[] newStack = newInv.toArray(new ItemStack[0]);
             inv.put(player.getUniqueId(), newStack);
             e.getDrops().removeAll(newInv);
@@ -71,11 +81,17 @@ public class NeutralListener implements Listener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
         Player player = e.getPlayer();
-        ItemStack[] newInv = inv.get(player.getUniqueId());
 
         if (inv.containsKey(player.getUniqueId())) {
-            player.getInventory().setArmorContents(newInv);
+            player.getInventory().setHelmet(helmet.get(player.getUniqueId()));
+            player.getInventory().setChestplate(chest.get(player.getUniqueId()));
+            player.getInventory().setLeggings(leg.get(player.getUniqueId()));
+            player.getInventory().setBoots(boot.get(player.getUniqueId()));
             inv.remove(player.getUniqueId());
+            helmet.remove(player.getUniqueId());
+            chest.remove(player.getUniqueId());
+            leg.remove(player.getUniqueId());
+            boot.remove(player.getUniqueId());
         }
     }
 

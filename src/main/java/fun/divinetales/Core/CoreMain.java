@@ -163,6 +163,7 @@ public class CoreMain extends JavaPlugin {
         Objects.requireNonNull(getCommand("dungeonteam")).setExecutor(new DungeonTeamCreate());
         Objects.requireNonNull(getCommand("dungeons")).setExecutor(new Dungeons());
         Objects.requireNonNull(getCommand("alignment")).setExecutor(new AlignmentCommand());
+        Objects.requireNonNull(getCommand("core")).setExecutor(new CoreCommands());
 
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             if (CurseDefine.on) {
@@ -187,7 +188,6 @@ public class CoreMain extends JavaPlugin {
                 }
             }
         }, 0L, 1200L);
-        runnable.run();
         log("DivineCore-AlphaV3 has loaded successfully!");
     }
 
