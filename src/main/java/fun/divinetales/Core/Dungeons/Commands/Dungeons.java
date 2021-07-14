@@ -2,6 +2,7 @@ package fun.divinetales.Core.Dungeons.Commands;
 
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Dungeons.Commands.SubCommands.Dungeons.DungeonCreate;
+import fun.divinetales.Core.Dungeons.Commands.SubCommands.Dungeons.SQLCommandDungeonSetup;
 import fun.divinetales.Core.Dungeons.Utils.DungeonSetup.DungeonData;
 import fun.divinetales.Core.Dungeons.Utils.DungeonSetup.DungeonDataManager;
 import fun.divinetales.Core.Utils.ChatUtils.MessageUtils;
@@ -33,6 +34,7 @@ public class Dungeons implements TabExecutor {
     public Dungeons() {
 
         subCommands.add(new DungeonCreate(manager));
+        subCommands.add(new SQLCommandDungeonSetup());
 
     }
 
@@ -44,7 +46,7 @@ public class Dungeons implements TabExecutor {
 
             ProfileCreateEvent config = CoreMain.getInstance().getPlayerProfileManager().getPlayer(player.getUniqueId());
 
-            if (!sender.hasPermission("team.d.create")) {
+            if (!sender.hasPermission("core.d.use")) {
                 msgPlayer(player, this.msgUtil.getCReplaceMessage(MessageUtils.Message.NO_PERMISSION));
                 return true;
             }

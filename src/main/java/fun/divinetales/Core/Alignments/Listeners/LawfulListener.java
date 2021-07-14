@@ -16,7 +16,7 @@ import static fun.divinetales.Core.Utils.ColorUtil.*;
 public class LawfulListener implements Listener {
 
     private final SQLRegionData data = new SQLRegionData(CoreMain.getInstance());
-    private final AlignmentManager manager = new AlignmentManager(CoreMain.getInstance());
+    private final AlignmentManager manager = new AlignmentManager();
 
     @EventHandler
     public void LawfulStateEnter(RegionEnterEvent e) {

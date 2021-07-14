@@ -1,8 +1,10 @@
 package fun.divinetales.Core.Dungeons.Commands.SubCommands.Dungeons;
 
+import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Dungeons.Utils.DungeonSetup.DungeonData;
 import fun.divinetales.Core.Dungeons.Utils.DungeonSetup.DungeonDataManager;
 import fun.divinetales.Core.Utils.CommandUtils.SubCommand;
+import fun.divinetales.Core.Utils.MYSQL.Data.DungeonData.SQLDungeon;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
@@ -28,7 +30,7 @@ public class DungeonCreate extends SubCommand {
 
     @Override
     public String getSyntax() {
-        return "/dungeons create";
+        return "/dungeons create [Name] [Is_Locked]";
     }
 
     @Override
@@ -37,12 +39,25 @@ public class DungeonCreate extends SubCommand {
         if (args.length > 1) {
 
 
-            if (!manager.isRegistered(args[1])) {
-                manager.registerDungeon(args[1]);
+            if (!CoreMain.getInstance().getSql().isConnected()) {
+                if (!manager.isRegistered(args[1])) {
+                    manager.registerDungeon(args[1]);
+                    msgPlayer(player, color("&f&lDungeon: " + args[1] + " &f&lHas been created!"));
+                } else {
+                    msgPlayer(player, color("That dungeon already exists!"));
+                }
+                return;
+            }
+
+            SQLDungeon dungeon_data = new SQLDungeon(CoreMain.getInstance());
+
+            if (!dungeon_data.exists(args[1])) {
+                dungeon_data.createDungeonPlacement(args[1], Boolean.getBoolean(args[2]));
                 msgPlayer(player, color("&f&lDungeon: " + args[1] + " &f&lHas been created!"));
-            } else {
+            }else {
                 msgPlayer(player, color("That dungeon already exists!"));
             }
+
 
 
         }

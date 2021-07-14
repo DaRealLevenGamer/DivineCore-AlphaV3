@@ -22,7 +22,7 @@ import static fun.divinetales.Core.Utils.ColorUtil.msgPlayer;
 public class WastelandListener implements Listener {
 
     private final SQLRegionData data = new SQLRegionData(CoreMain.getInstance());
-    private final AlignmentManager manager = new AlignmentManager(CoreMain.getInstance());
+    private final AlignmentManager manager = new AlignmentManager();
     private final SQLRegionWasteland wasteland =  new SQLRegionWasteland(CoreMain.getInstance());
 
     @EventHandler
@@ -31,9 +31,14 @@ public class WastelandListener implements Listener {
         Player player = e.getPlayer();
 
         if (data.exists(e.getRegion().getId())) {
-            if (data.getAlignment(e.getRegion().getId()).equals("TYPE_WASTELAND") || wasteland.exists(e.getRegion().getId())) {
+            if (data.getAlignment(e.getRegion().getId()).equals("TYPE_WASTELAND")) {
                 manager.setAlignmentType(player, AlignmentType.WasteLand);
             }
+            return;
+        }
+
+        if (wasteland.exists(e.getRegion().getId())) {
+            manager.setAlignmentType(player, AlignmentType.WasteLand);
         }
 
     }
@@ -56,10 +61,15 @@ public class WastelandListener implements Listener {
         Player player = e.getPlayer();
 
         if (data.exists(e.getRegion().getId())) {
-            if (data.getAlignment(e.getRegion().getId()).equals("TYPE_WASTELAND") || wasteland.exists(e.getRegion().getId())) {
+            if (data.getAlignment(e.getRegion().getId()).equals("TYPE_WASTELAND")) {
                 if (player.hasPotionEffect(PotionEffectType.POISON))
                     player.removePotionEffect(PotionEffectType.POISON);
             }
+        }
+
+        if (wasteland.exists(e.getRegion().getId())) {
+            if (player.hasPotionEffect(PotionEffectType.POISON))
+                player.removePotionEffect(PotionEffectType.POISON);
         }
 
     }

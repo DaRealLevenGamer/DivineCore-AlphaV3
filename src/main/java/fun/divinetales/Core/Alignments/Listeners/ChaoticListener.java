@@ -1,8 +1,6 @@
 package fun.divinetales.Core.Alignments.Listeners;
 
-import de.netzkronehd.WGRegionEvents.WGRegionEventsListener;
 import de.netzkronehd.WGRegionEvents.events.RegionEnterEvent;
-import de.netzkronehd.WGRegionEvents.events.RegionLeaveEvent;
 import fun.divinetales.Core.Alignments.AlignmentManager;
 import fun.divinetales.Core.Alignments.AlignmentType;
 import fun.divinetales.Core.CoreMain;
@@ -18,7 +16,7 @@ import static fun.divinetales.Core.Utils.ColorUtil.msgPlayer;
 public class ChaoticListener implements Listener{
 
     private final SQLRegionData data = new SQLRegionData(CoreMain.getInstance());
-    private final AlignmentManager manager = new AlignmentManager(CoreMain.getInstance());
+    private final AlignmentManager manager = new AlignmentManager();
 
     @EventHandler
     public void ChaoticStateEnter(RegionEnterEvent e) {

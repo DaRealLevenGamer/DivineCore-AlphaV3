@@ -24,7 +24,7 @@ import static fun.divinetales.Core.Utils.ColorUtil.msgPlayer;
 public class NeutralListener implements Listener {
 
     private final SQLRegionData data = new SQLRegionData(CoreMain.getInstance());
-    private final AlignmentManager manager = new AlignmentManager(CoreMain.getInstance());
+    private final AlignmentManager manager = new AlignmentManager();
     public static final HashMap<UUID, ItemStack[]> inv = new HashMap<>();
     private static final HashMap<UUID, ItemStack> helmet = new HashMap<>();
     private static final HashMap<UUID, ItemStack> chest = new HashMap<>();

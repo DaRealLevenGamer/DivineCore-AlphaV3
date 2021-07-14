@@ -6,7 +6,6 @@ import fun.divinetales.Core.Alignments.Listeners.ChaoticListener;
 import fun.divinetales.Core.Alignments.Listeners.LawfulListener;
 import fun.divinetales.Core.Alignments.Listeners.NeutralListener;
 import fun.divinetales.Core.Alignments.Listeners.WastelandListener;
-import fun.divinetales.Core.Alignments.Utils.WastelandRunnable;
 import fun.divinetales.Core.Coammnds.*;
 import fun.divinetales.Core.Coammnds.Chat.*;
 import fun.divinetales.Core.Coammnds.Integrated.BMFCommand;
@@ -26,6 +25,8 @@ import fun.divinetales.Core.Utils.Data.Config;
 import fun.divinetales.Core.Utils.Data.PlayerData.PlayerProfileManager;
 import fun.divinetales.Core.Utils.InventoryUtils.GUIManager;
 import fun.divinetales.Core.Utils.MYSQL.ConfigUtils;
+import fun.divinetales.Core.Utils.MYSQL.Data.DungeonData.SQLDungeon;
+import fun.divinetales.Core.Utils.MYSQL.Data.DungeonData.SQLDungeonSetup;
 import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionData;
 import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionWasteland;
 import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerData;
@@ -68,6 +69,8 @@ public class CoreMain extends JavaPlugin {
     private SQLPlayerSkins sqlPlayerSkins;
     private SQLRegionData regionData;
     private SQLRegionWasteland wasteland;
+    private SQLDungeon sqlDungeon;
+    private SQLDungeonSetup sqlDungeonSetup;
 
     //FOR GUI STUFF
     private GUIManager manager;
@@ -76,11 +79,7 @@ public class CoreMain extends JavaPlugin {
     private PlayerProfileManager playerProfileManager;
 
     //For alignments
-    private final AlignmentManager alignmentManager = new AlignmentManager(this);
-
-
-    //RUNNABLE FOR WasteLands
-    WastelandRunnable runnable = new WastelandRunnable();
+    private final AlignmentManager alignmentManager = new AlignmentManager();
 
     //Setters for the chat
     private final HashMap<String, String> pexGroups = new HashMap<>();
@@ -110,6 +109,8 @@ public class CoreMain extends JavaPlugin {
         this.sqlPlayerData = new SQLPlayerData(this);
         this.regionData = new SQLRegionData(this);
         this.wasteland = new SQLRegionWasteland(this);
+        this.sqlDungeon = new SQLDungeon(this);
+        this.sqlDungeonSetup = new SQLDungeonSetup(this);
         if (configUtils.getBoolean("use_sql")) {
             try {
                 sql.Connect();
@@ -127,7 +128,8 @@ public class CoreMain extends JavaPlugin {
                 sqlPlayerSkins.createSkinTable();
                 regionData.createRegionTable();
                 wasteland.createWastelandTable();
-
+                sqlDungeon.createDungeonTable();
+                sqlDungeonSetup.createDungeonSetupTable();
             }
 
         }
@@ -211,7 +213,6 @@ public class CoreMain extends JavaPlugin {
         this.aManager.save();
         NeutralListener.inv.clear();
         alignmentManager.cleanState();
-        runnable.cancel();
         log("DivineCore-AlphaV3 has been disabled!");
     }
 
