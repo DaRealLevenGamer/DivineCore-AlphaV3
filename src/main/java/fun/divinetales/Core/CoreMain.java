@@ -29,9 +29,9 @@ import fun.divinetales.Core.Utils.MYSQL.Data.DungeonData.SQLDungeon;
 import fun.divinetales.Core.Utils.MYSQL.Data.DungeonData.SQLDungeonSetup;
 import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionData;
 import fun.divinetales.Core.Utils.MYSQL.Data.RegionData.SQLRegionWasteland;
+import fun.divinetales.Core.Utils.MYSQL.Data.SQLChangeSkin;
 import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerData;
 import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerProfile;
-import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerSkins;
 import fun.divinetales.Core.Utils.MYSQL.SQL;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -66,11 +66,11 @@ public class CoreMain extends JavaPlugin {
     private SQL sql;
     private SQLPlayerData sqlPlayerData;
     private SQLPlayerProfile sqlPlayerProfile;
-    private SQLPlayerSkins sqlPlayerSkins;
     private SQLRegionData regionData;
     private SQLRegionWasteland wasteland;
     private SQLDungeon sqlDungeon;
     private SQLDungeonSetup sqlDungeonSetup;
+    private SQLChangeSkin sqlChangeSkin;
 
     //FOR GUI STUFF
     private GUIManager manager;
@@ -105,12 +105,12 @@ public class CoreMain extends JavaPlugin {
         //For MYSQL
         this.sql = new SQL();
         this.sqlPlayerProfile = new SQLPlayerProfile(this);
-        this.sqlPlayerSkins = new SQLPlayerSkins(this);
         this.sqlPlayerData = new SQLPlayerData(this);
         this.regionData = new SQLRegionData(this);
         this.wasteland = new SQLRegionWasteland(this);
         this.sqlDungeon = new SQLDungeon(this);
         this.sqlDungeonSetup = new SQLDungeonSetup(this);
+        this.sqlChangeSkin = new SQLChangeSkin(this);
         if (configUtils.getBoolean("use_sql")) {
             try {
                 sql.Connect();
@@ -125,11 +125,11 @@ public class CoreMain extends JavaPlugin {
                 Bukkit.getLogger().log(Level.INFO, "The DataBase " + configUtils.getMessage(ConfigUtils.getConfig.MYSQLDataBase) + " Is connected!");
                 sqlPlayerData.createPlayerTable();
                 sqlPlayerProfile.createProfileTable();
-                sqlPlayerSkins.createSkinTable();
                 regionData.createRegionTable();
                 wasteland.createWastelandTable();
                 sqlDungeon.createDungeonTable();
                 sqlDungeonSetup.createDungeonSetupTable();
+                sqlChangeSkin.createSkinTable();
             }
 
         }
@@ -258,10 +258,6 @@ public class CoreMain extends JavaPlugin {
 
     public SQLPlayerData getSqlPlayerData() {
         return sqlPlayerData;
-    }
-
-    public SQLPlayerSkins getSqlPlayerSkins() {
-        return sqlPlayerSkins;
     }
 
     public SQLPlayerProfile getSqlPlayerProfile() {

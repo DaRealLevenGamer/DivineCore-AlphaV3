@@ -106,6 +106,23 @@ public class SQLPlayerData {
 
     }
 
+    public void setSkin(UUID uuid) {
+        try {
+
+            int playerID = getId(uuid);
+            PreparedStatement ps = plugin.getSql().getConnection().prepareStatement("UPDATE PLAYER_DATA SET CHANGE_SKIN=? WHERE ID=?");
+            ps.setBoolean(1, true);
+            ps.setInt(2, playerID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            if (utils.getBoolean("sql_debug")) {
+                e.printStackTrace();
+            }
+            Bukkit.getLogger().log(Level.SEVERE, "SQL has Encountered an error!");
+        }
+
+    }
+
     public String getElement(UUID uuid) {
         try {
             int playerID = plugin.getSqlPlayerData().getId(uuid);
@@ -116,6 +133,26 @@ public class SQLPlayerData {
             if (rs.next()) {
                 element = rs.getString("ELEMENT");
                 return element;
+            }
+        } catch (SQLException throwables) {
+            if (utils.getBoolean("sql_debug")) {
+                throwables.printStackTrace();
+            }
+            Bukkit.getLogger().log(Level.SEVERE, "SQL has Encountered an error!");
+        }
+        return null;
+    }
+
+    public Boolean isSkin(UUID uuid) {
+        try {
+            int playerID = plugin.getSqlPlayerData().getId(uuid);
+            PreparedStatement ps = plugin.getSql().getConnection().prepareStatement("SELECT CHANGE_SKIN FROM PLAYER_DATA WHERE ID=?");
+            ps.setInt(1, playerID);
+            ResultSet rs = ps.executeQuery();
+            boolean skin;
+            if (rs.next()) {
+                skin = rs.getBoolean("CHANGE_SKIN");
+                return skin;
             }
         } catch (SQLException throwables) {
             if (utils.getBoolean("sql_debug")) {

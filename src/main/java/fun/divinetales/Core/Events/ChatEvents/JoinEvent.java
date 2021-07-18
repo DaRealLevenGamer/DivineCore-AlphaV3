@@ -1,21 +1,31 @@
 package fun.divinetales.Core.Events.ChatEvents;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.GUI.ElementGUI;
 import fun.divinetales.Core.Utils.ChatUtils.MessageUtils;
 import fun.divinetales.Core.Utils.InventoryUtils.GUIManager;
+import fun.divinetales.Core.Utils.MYSQL.Data.SQLChangeSkin;
 import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerData;
 import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerProfile;
-import fun.divinetales.Core.Utils.MYSQL.Data.SQLPlayerSkins;
+import fun.divinetales.Core.Utils.ReflectionUtil;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_16_R3.*;
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import static fun.divinetales.Core.Utils.ColorUtil.*;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.UUID;
 
 
 public class JoinEvent implements Listener {
@@ -30,7 +40,7 @@ public class JoinEvent implements Listener {
         CoreMain.getInstance().getPlayerProfileManager().registerPlayer(p.getUniqueId());
         SQLPlayerData playerData = CoreMain.getInstance().getSqlPlayerData();
         SQLPlayerProfile profile = CoreMain.getInstance().getSqlPlayerProfile();
-        SQLPlayerSkins skins = CoreMain.getInstance().getSqlPlayerSkins();
+        SQLChangeSkin skin = new SQLChangeSkin(CoreMain.getInstance());
 
 
         if (p.isOp() || p.hasPermission("staff.welcome")) {
@@ -44,11 +54,19 @@ public class JoinEvent implements Listener {
 
         if (CoreMain.getInstance().getConfigUtils().getBoolean("use_sql") && CoreMain.getInstance().getSql().isConnected()) {
             if (!CoreMain.getInstance().getSqlPlayerData().exists(p.getUniqueId())) {
-                msgPlayer(p, color(msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINEPLAYER) + " &a&lPlayerProfile has been created!"));
                 playerData.createPlayer(p);
                 profile.createProfile(p);
             }
         }
+
+
+        skin.createPlayerSkin(p);
+
+        if (skin.is_Skin(p.getUniqueId())) {
+            ChangeSkin(p);
+            msgPlayer(p, color("&a&lSkin has been changed!"));
+        }
+
 
         if (CoreMain.getInstance().getSql().isConnected() && playerData.exists(p.getUniqueId())) {
             if (playerData.getElement(p.getUniqueId()) == null) {
@@ -58,5 +76,21 @@ public class JoinEvent implements Listener {
         }
 
     }
+
+    public static void ChangeSkin(Player player) {
+        UUID id = player.getUniqueId();
+        SQLChangeSkin skins = new SQLChangeSkin(CoreMain.getInstance());
+        GameProfile profile = ((CraftPlayer) player).getHandle().getProfile();
+        PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+
+        connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) player).getHandle()));
+        profile.getProperties().removeAll("textures");
+        profile.getProperties().put("textures", new Property("textures", skins.getSkinTexture(id), skins.getSkinSignature(id)));
+        Bukkit.getScheduler().runTaskLater(CoreMain.getInstance(), () -> Bukkit.getOnlinePlayers().forEach(player::hidePlayer), 0);
+        Bukkit.getScheduler().runTaskLater(CoreMain.getInstance(), () -> Bukkit.getOnlinePlayers().forEach(player::showPlayer), 15);
+        connection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, ((CraftPlayer) player).getHandle()));
+
+    }
+
 }
 

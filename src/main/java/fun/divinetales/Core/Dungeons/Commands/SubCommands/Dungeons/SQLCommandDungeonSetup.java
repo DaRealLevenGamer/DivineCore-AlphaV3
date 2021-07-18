@@ -43,7 +43,7 @@ public class SQLCommandDungeonSetup extends SubCommand {
             }
 
             if (!dungeon.idExists(D_ID) || !setup.idExists(D_ID)) {
-                msgPlayer(player, "&cDungeonID Dose not exist, please try again!");
+                msgPlayer(player, "&cDungeonID Does not exist, please try again!");
                 return;
             }
 
