@@ -23,7 +23,7 @@ public class BMFCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if (!player.hasPermission("bmf.hat")) {
+            if (!player.hasPermission("core.hat")) {
                 msgPlayer(player, color(msgUtil.getCReplaceMessage(MessageUtils.Message.DIVINEPLAYER)) + " &f&lYou do not have permission to run this command!");
                 return true;
             }
