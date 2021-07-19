@@ -43,7 +43,8 @@ public class BMFCommand implements CommandExecutor {
             }
 
             if (player.getInventory().getItemInMainHand().getType() != Material.AIR) {
-                if (inHelmet == null) {
+                assert false;
+                if (inHelmet.getType().isAir()) {
                     player.getLocation().getWorld().spawnParticle(Particle.TOTEM, player.getLocation(), 90);
                     player.getInventory().setHelmet(player.getInventory().getItemInMainHand());
                     player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));

@@ -1,9 +1,12 @@
 package fun.divinetales.Core.Coammnds.SubCommands.Profile;
+import com.mojang.authlib.GameProfile;
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Events.ChatEvents.JoinEvent;
 import fun.divinetales.Core.Utils.CommandUtils.SubCommand;
 import fun.divinetales.Core.Utils.MYSQL.Data.SQLChangeSkin;
+import fun.divinetales.Core.Utils.PlayerInfoChanger;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -62,7 +65,7 @@ public class ChangeSkinURL extends SubCommand {
                     try {
                         sqlChangeSkin.setSkinInfo(player.getUniqueId(), Integer.parseInt(args[1]), textureEncoded, signature);
                         msgPlayer(player, color("&a&lYour skin has been changed!"));
-                        JoinEvent.ChangeSkin(player);
+                        PlayerInfoChanger.ChangeSkin(player);
                     } catch (IllegalArgumentException e) {
                         msgPlayer(player, color("&c&lThere was an error changing your skin!"));
                         e.printStackTrace();

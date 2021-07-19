@@ -1,7 +1,7 @@
 package fun.divinetales.Core.Coammnds;
 
-import fun.divinetales.Core.Coammnds.Core.FreezeCommand;
-import fun.divinetales.Core.Coammnds.Core.UnFreezeCommand;
+import fun.divinetales.Core.Coammnds.SubCommands.Core.FreezeCommand;
+import fun.divinetales.Core.Coammnds.SubCommands.Core.UnFreezeCommand;
 import fun.divinetales.Core.CoreMain;
 import fun.divinetales.Core.Utils.ChatUtils.MessageUtils;
 import fun.divinetales.Core.Utils.CommandUtils.SubCommand;
